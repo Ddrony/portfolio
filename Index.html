@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Oliveira | Desenvolvedor Web & Mobile</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração de Cores -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00d2ff',      
+                        primaryDark: '#00a3c7',  
+                        dark: '#0a0f18',         
+                        card: '#111827',         
+                        cardLight: '#1f2937',    
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon': '0 0 10px rgba(0, 210, 255, 0.3), 0 0 20px rgba(0, 210, 255, 0.1)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050a10;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        .glow-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.08) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0f18; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00d2ff; }
+
+        .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -10px rgba(0, 210, 255, 0.2); border-color: rgba(0, 210, 255, 0.3); }
+
+        /* Estilos do Carrossel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .carousel-slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-black">
+
+    <div class="glow-bg"></div>
+
+    <!-- Navegação -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md border-b border-white/5 bg-dark/80" id="navbar">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold flex items-center gap-2">
+                <span class="text-primary">&lt;</span>David<span class="text-primary">/&gt;</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+                <a href="#sobre" class="hover:text-primary transition-colors">Sobre Mim</a>
+                <a href="#habilidades" class="hover:text-primary transition-colors">Habilidades</a>
+                <a href="#projetos" class="hover:text-primary transition-colors">Projetos</a>
+                <a href="#contato" class="px-5 py-2 rounded-full border border-primary/30 text-primary hover:bg-primary hover:text-black transition-all">
+                    Contato
+                </a>
+            </div>
+
+            <button class="md:hidden text-2xl text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-t border-gray-800 p-4 absolute w-full flex flex-col gap-4 shadow-xl">
+            <a href="#sobre" class="block text-gray-300 hover:text-primary">Sobre Mim</a>
+            <a href="#habilidades" class="block text-gray-300 hover:text-primary">Habilidades</a>
+            <a href="#projetos" class="block text-gray-300 hover:text-primary">Projetos</a>
+            <a href="#contato" class="block text-primary font-bold">Contato</a>
+        </div>
+    </nav>
+
+    <!-- HEADER / HERO -->
+    <header class="min-h-screen flex flex-col justify-center px-6 pt-32 pb-20 relative overflow-hidden max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-12 md:text-left text-center">
+            
+            <!-- Lado Esquerdo: Foto de Perfil -->
+            <div class="relative group shrink-0">
+                <div class="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-full blur opacity-25 group-hover:opacity-60 transition duration-1000"></div>
+                <div class="relative w-48 h-48 md:w-60 md:h-60 rounded-full bg-card border-4 border-card ring-2 ring-primary/40 flex items-center justify-center overflow-hidden">
+                    <img src="imagens/minha-foto.png" alt="David Oliveira" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    
+                    <span class="text-6xl font-bold text-gray-300 tracking-wider hidden">DO</span>
+                </div>
+            </div>
+
+            <!-- Lado Direito: Informações e Botões -->
+            <div class="flex-1 space-y-6">
+                <div>
+                    <p class="text-primary font-bold tracking-[0.25em] mb-3 text-sm md:text-base uppercase">
+                        Desenvolvedor Web & Mobile
+                    </p>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                        DAVID <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">OLIVEIRA</span>
+                    </h1>
+                    <p class="text-gray-400 max-w-xl text-lg md:text-xl leading-relaxed">
+                        Com sólida base técnica em redes, desenvolvo aplicações web e mobile que unem performance e inovação. Transformo ideias em soluções digitais robustas.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#projetos" class="px-8 py-3.5 bg-primary text-dark font-bold rounded-lg hover:bg-white transition-all shadow-neon flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-code"></i> Ver Projetos
+                    </a>
+                    <a href="#contato" class="px-8 py-3.5 bg-transparent border border-gray-700 text-white font-medium rounded-lg hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-envelope"></i> Contato
+                    </a>
+                </div>
+
+            <!-- LINKS SOCIAIS -->
+                <div class="flex gap-6 text-gray-500 pt-4 justify-center md:justify-start">
+                    <a href="https://github.com/Ddrony" target="_blank" class="text-2xl hover:text-primary hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-github"></i></a>
+                    <a href="http://www.linkedin.com/in/davidroneoliveira" target="_blank" class="text-2xl hover:text-primary hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://wa.me/34662520455" target="_blank" class="text-2xl hover:text-primary hover:-translate-y-1 transition-all">
+                        <i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seta de Scroll -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block">
+            <a href="#sobre" class="animate-bounce text-gray-600 hover:text-primary transition-colors">
+                <i class="fa-solid fa-chevron-down text-xl"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- SEÇÃO SOBRE -->
+    <section id="sobre" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <p class="text-primary text-sm font-bold uppercase tracking-widest mb-2">Quem sou eu</p>
+            <h2 class="text-4xl font-bold text-white">Sobre <span class="text-primary">Mim</span></h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2 lg:order-1 space-y-6">
+                <div class="bg-card/50 backdrop-blur-sm p-8 rounded-2xl border border-white/5 hover:border-primary/20 transition-colors">
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        <i class="fa-solid fa-quote-left text-primary/40 text-3xl mb-2 block"></i>
+                        Programador focado na entrega de valor e qualidade. A minha trajetória é marcada pela curiosidade técnica e resolução eficaz de problemas.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        Desde 2018 atuo como técnico em redes de informática, área que me proporcionou uma base sólida em infraestrutura, lógica e diagnóstico. Essa experiência permite-me criar software não apenas funcional, mas otimizado e seguro.
+                    </p>
+                </div>
+            </div>
+
+            <div class="order-1 lg:order-2 grid grid-cols-1 gap-4">
+                <div class="bg-card p-6 rounded-xl border border-white/5 flex flex-col items-center justify-center text-center gap-3 hover-lift">
+                    <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-primary text-xl">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-gray-500 uppercase">Perfil</span>
+                        <span class="font-bold text-white">Dev Jr.</span>
+                    </div>
+                </div>
+                <div class="bg-card p-6 rounded-xl border border-white/5 flex flex-col items-center justify-center text-center gap-3 hover-lift">
+                    <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-primary text-xl">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-gray-500 uppercase">Foco</span>
+                        <span class="font-bold text-white">Mobile (Kotlin) & Web</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO HABILIDADES -->
+    <section id="habilidades" class="py-20 px-6 bg-black/20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-primary text-sm font-bold uppercase tracking-widest mb-2">Stack Tecnológica</p>
+                <h2 class="text-4xl font-bold text-white">Minhas <span class="text-primary">Habilidades</span></h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+                <div class="skill-card bg-card p-6 rounded-xl border border-white/5 hover-lift group text-center">
+                    <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-primary text-2xl mb-4 mx-auto group-hover:bg-primary group-hover:text-black transition-colors">
+                        <i class="fa-brands fa-html5"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-1">HTML/CSS</h3>
+                    <p class="text-xs text-gray-500">Intermediário</p>
+                </div>
+
+                <div class="skill-card bg-card p-6 rounded-xl border border-white/5 hover-lift group text-center">
+                    <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-primary text-2xl mb-4 mx-auto group-hover:bg-primary group-hover:text-black transition-colors">
+                        <i class="fa-brands fa-js"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-1">JavaScript</h3>
+                    <p class="text-xs text-gray-500">Intermediário</p>
+                </div>
+
+                <div class="skill-card bg-card p-6 rounded-xl border border-white/5 hover-lift group text-center">
+                    <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center text-primary text-2xl mb-4 mx-auto group-hover:bg-primary group-hover:text-black transition-colors">
+                        <i class="fa-brands fa-android"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-1">Kotlin</h3>
+                    <p class="text-xs text-gray-500">Android Dev</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO PROJETOS -->
+    <section id="projetos" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <p class="text-primary text-sm font-bold uppercase tracking-widest mb-2">Portfólio</p>
+            <h2 class="text-4xl font-bold text-white">Meus <span class="text-primary">Projetos</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Projeto 1: Calculadora com Carrossel -->
+            <div class="group relative rounded-2xl bg-card border border-white/5 overflow-hidden hover:border-primary/50 transition-all duration-300">
+                <div class="h-[400px] bg-gradient-to-b from-gray-800 to-card flex items-center justify-center relative overflow-hidden group/carousel">
+                    
+                    <!-- Botões de Navegação -->
+                    <button onclick="changeSlide(-1)" class="absolute left-4 z-20 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-primary hover:text-black transition-all opacity-0 group-hover/carousel:opacity-100">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button onclick="changeSlide(1)" class="absolute right-4 z-20 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-primary hover:text-black transition-all opacity-0 group-hover/carousel:opacity-100">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Device Frame Mockup -->
+                    <div class="w-48 h-80 border-2 border-gray-900 bg-gray-900 rounded-[11px] shadow-2xl relative flex flex-col items-center overflow-hidden">
+                                                
+                        <div class="carousel-container">
+                            <img src="imagens/Screenshot_1.png" class="carousel-slide active w-full h-full object-cover" alt="Screen 1">
+                            <img src="imagens/Screenshot_2.png" class="carousel-slide w-full h-full object-cover" alt="Screen 2">
+                            <img src="imagens/Screenshot_3.png" class="carousel-slide w-full h-full object-cover" alt="Screen 3">
+                            <img src="imagens/Screenshot_4.png" class="carousel-slide w-full h-full object-cover" alt="Screen 4">
+                            <img src="imagens/Screenshot_5.png" class="carousel-slide w-full h-full object-cover" alt="Screen 5">
+                        </div>
+                    </div>
+
+                    <!-- Indicadores -->
+                    <div class="absolute bottom-4 flex gap-2 z-20">
+                        <div class="dot w-2 h-2 rounded-full bg-primary"></div>
+                        <div class="dot w-2 h-2 rounded-full bg-gray-600"></div>
+                        <div class="dot w-2 h-2 rounded-full bg-gray-600"></div>
+                        <div class="dot w-2 h-2 rounded-full bg-gray-600"></div>
+                        <div class="dot w-2 h-2 rounded-full bg-gray-600"></div>
+                    </div>
+                </div>
+
+                <div class="p-8">
+                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors mb-4">Calculadora de Combustível</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Aplicativo Android nativo (Kotlin) para cálculo de custo-benefício. Possui interface moderna e suporte multilingue.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-800 text-xs font-medium text-primary rounded-full border border-white/5">Android Studio</span>
+                        <span class="px-3 py-1 bg-gray-800 text-xs font-medium text-primary rounded-full border border-white/5">Kotlin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projeto 2 -->
+            <div class="group relative rounded-2xl bg-card border border-white/5 overflow-hidden hover:border-primary/50 transition-all duration-300">
+                <div class="h-[400px] bg-gradient-to-b from-gray-800 to-card flex items-center justify-center relative overflow-hidden">
+                    <div class="w-4/5 h-68 border border-gray-700 bg-gray-900 rounded-t-xl shadow-2xl transform translate-y-8 group-hover:translate-y-4 transition-transform duration-500 overflow-hidden">
+                        <div class="h-6 bg-gray-800 border-b border-gray-700 flex items-center px-3 gap-1">
+                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                            <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                        </div>
+                        <div class="p-0 flex flex-col items-center justify-center h-full">
+                             <img src="imagens/marsi_taller_web.png" alt="Marsi Automóvel" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors mb-4">Projeto Marsi Automóvel</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Página web interativa com manipulação de DOM. Inclui funcionalidade dinâmica de alteração de cores via JavaScript.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-gray-800 text-xs font-medium text-primary rounded-full border border-white/5">HTML</span>
+                        <span class="px-3 py-1 bg-gray-800 text-xs font-medium text-primary rounded-full border border-white/5">CSS</span>
+                        <span class="px-3 py-1 bg-gray-800 text-xs font-medium text-primary rounded-full border border-white/5">JavaScript</span>
+                    </div>
+                    <a href="marsi_index.html" target="_blank" class="w-full py-2.5 text-center text-sm font-bold bg-white text-black rounded hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-eye"></i> Ver Demo Online
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CONTATO -->
+    <section id="contato" class="py-24 px-6 bg-black/30 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-primary text-sm font-bold uppercase tracking-widest mb-2">Contato</p>
+                <h2 class="text-4xl font-bold text-white">Vamos <span class="text-primary">Conversar?</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 gap-16">
+                <!-- Coluna Esquerda: Informações -->
+                <div class="bg-card rounded-2xl p-8 border border-white/5 shadow-2xl space-y-8 h-fit">
+                    <h3 class="text-2xl font-bold text-white mb-2">Informações</h3>
+                    
+                    <!-- Localização -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-xl shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-wider text-gray-500 font-bold mb-1">Localização</p>
+                            <p class="text-white font-medium">Espanha</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-xl shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-wider text-gray-500 font-bold mb-1">Email</p>
+                            <p class="text-white font-medium">atendimentoitecinformatica@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Disponibilidade -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary text-xl shrink-0">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-wider text-gray-500 font-bold mb-1">Disponibilidade</p>
+                            <p class="text-white font-medium">Full-time</p>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Coluna Direita: Formulário -->
+            <div class="bg-card rounded-2xl p-8 border border-white/5 shadow-2xl">
+                <form onsubmit="event.preventDefault();" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                       <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-300">Nome</label>
+                            <input type="text" placeholder="Seu nome" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
+                        </div>
+
+                        <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-300">Email</label>
+                                <input type="email" placeholder="seu@email.com" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-gray-300">Mensagem</label>
+                        <textarea rows="4" placeholder="Como posso ajudar?" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none resize-none transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-dark font-bold py-4 rounded-lg hover:bg-white hover:scale-[1.02] active:scale-95 transition-all shadow-neon flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 David Oliveira</i></p>
+    </footer>
+
+    <script>
+        // Lógica da Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.replace('bg-dark/80', 'bg-dark/95');
+            } else {
+                navbar.classList.replace('bg-dark/95', 'bg-dark/80');
+            }
+        });
+
+        // Lógica do Carrossel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateCarousel() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-primary', index === currentSlide);
+                dot.classList.toggle('bg-gray-600', index !== currentSlide);
+            });
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            updateCarousel();
+        }
+    </script>
+</body>
+</html>
