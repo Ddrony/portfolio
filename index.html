@@ -395,21 +395,21 @@
 
             <!-- Coluna Direita: Formulário -->
             <div class="bg-card rounded-2xl p-8 border border-white/5 shadow-2xl">
-                <form onsubmit="event.preventDefault();" class="space-y-6">
+                <form action="https://formspree.io/f/mreldpkb" method="POST" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                        <div class="space-y-2">
                             <label class="text-sm font-bold text-gray-300">Nome</label>
-                            <input type="text" placeholder="Seu nome" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
+                            <input type="text" name="name" placeholder="Seu nome" required class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
                         </div>
 
                         <div class="space-y-2">
                                 <label class="text-sm font-bold text-gray-300">Email</label>
-                                <input type="email" placeholder="seu@email.com" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
+                                <input type="email" name="email" placeholder="seu@email.com" required class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none transition-colors">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-bold text-gray-300">Mensagem</label>
-                        <textarea rows="4" placeholder="Como posso ajudar?" class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none resize-none transition-colors"></textarea>
+                        <textarea name="message" rows="4" placeholder="Como posso ajudar?" required class="w-full bg-cardLight text-white px-4 py-3 rounded-lg border border-white/5 focus:border-primary outline-none resize-none transition-colors"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-primary text-dark font-bold py-4 rounded-lg hover:bg-white hover:scale-[1.02] active:scale-95 transition-all shadow-neon flex items-center justify-center gap-2">
                         <i class="fa-solid fa-paper-plane"></i> Enviar Mensagem
@@ -460,3 +460,4 @@
     </script>
 </body>
 </html>
+
